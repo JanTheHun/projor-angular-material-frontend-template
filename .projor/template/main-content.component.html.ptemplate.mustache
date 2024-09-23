@@ -7,6 +7,34 @@
 }
 ---
 <h2>Welcome to Projor Angular / Material Frontend!</h2>
-<h3>This is a Projor generated frontend for CRUD APIs, using Angular / Material</h3>
-<h3>You may start by clicking on an Entity on the left</h3>
-<h3>Don't worry, you can always come back to this friendly welcome page by clicking on the menu icon in the top left corner!</h3>
+<h3>If you want to see routeing, click on an Entity on the left. Don't worry, you can always come back to this friendly welcome page by clicking on the menu icon in the top left corner!</h3>
+
+
+<mat-card appearance="outlined" class="example-card">
+  <mat-card-actions>
+		{{#each entities}}
+			<button mat-button (click)="selected = '{{pascalCase name}}'">{{pascalCase name}}</button>
+		{{/each}}
+  </mat-card-actions>
+
+	<ng-container *ngIf="!selected">
+		<mat-card-header>
+			<mat-card-title>Click on an Entity type!</mat-card-title>
+		</mat-card-header>
+	</ng-container>
+
+	<ng-container *ngIf="selected">
+		<mat-card-header>
+			<mat-card-title>\{{selected}}TableComponent</mat-card-title>
+		</mat-card-header>
+	</ng-container>
+
+  <mat-card-content>
+		{{#each entities}}
+		<ng-container *ngIf="selected === '{{pascalCase name}}'">
+		<app-{{camelCase name}}-table (rowClicked)="onExampleTableRowClick($event, '{{pascalCase name}}')"></app-{{camelCase name}}-table>
+		</ng-container>
+		{{/each}}
+  </mat-card-content>
+
+</mat-card>

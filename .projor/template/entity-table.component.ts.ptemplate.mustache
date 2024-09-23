@@ -1,0 +1,55 @@
+{
+    "forEach": "entities",
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-table/{{kebabCase name}}-table.component.ts",
+    "formatUsing": "typescript"
+}
+---
+
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { HttpService } from "../../../../services/http.service";
+import { Router } from "@angular/router";
+import { SocketService } from "../../../../services/socket.service";
+
+@Component({
+  selector: 'app-{{kebabCase name}}-table',
+  templateUrl: './{{kebabCase name}}-table.component.html',
+  styleUrl: './{{kebabCase name}}-table.component.scss'
+})
+export class {{pascalCase name}}TableComponent implements OnInit {
+
+  @Output() rowClicked: EventEmitter<any> = new EventEmitter();
+
+  dataSource: any[] = []
+  displayedColumns: string[] = [
+    {{#each attributes}}"{{name}}",{{/each}}
+    {{#each associations}}"{{name}}",{{/each}}
+  ];
+
+  constructor(
+      private httpService: HttpService,
+      private router: Router,
+      private socketService: SocketService
+  ) {}
+
+  private getEntities(): void {
+    this.httpService.getRequest("{{kebabCase name}}")
+      .then((data: any) => {
+        this.dataSource = data
+      })
+      .catch((error: any) => {
+        console.log(error)
+      })
+  }
+
+  ngOnInit() {
+    this.getEntities();
+    this.socketService.subscribeToTable("{{kebabCase name}}").subscribe((data: any) => {
+      this.getEntities();
+    });
+  }
+
+  public onRowClick(row: any) {
+    // this.router.navigate(["/{{kebabCase name}}", row.id]);
+    this.rowClicked.emit(row);
+  }
+}

@@ -1,9 +1,8 @@
 {
     "forEach": "entities",
-    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}.component.html"
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-table/{{kebabCase name}}-table.component.html"
 }
 ---
-<h2>{{pascalCase name}} <button mat-raised-button (click)="onCreate()">Create {{pascalCase name}}</button></h2>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     {{#each attributes}}

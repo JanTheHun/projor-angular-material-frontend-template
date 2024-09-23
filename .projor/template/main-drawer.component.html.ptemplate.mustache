@@ -7,5 +7,5 @@
 }
 ---
 <ng-container *ngFor="let table of tables">
-  <button mat-raised-button class="navBtn" (click)="onNavigate(table)">\{{table}}</button>
+  <button mat-raised-button class="navBtn" [matBadge]="table.counter" [matBadgeHidden]="table.counter === 0" (click)="onNavigate(table)">\{{table.table}}</button>
 </ng-container>

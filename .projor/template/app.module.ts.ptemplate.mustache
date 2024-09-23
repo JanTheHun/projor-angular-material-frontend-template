@@ -21,13 +21,13 @@ import { MainContentComponent } from './components/main-content/main-content.com
 import { ErrorSnackbarComponent } from "./components/error-snackbar/error-snackbar.component";
 import { SuccessSnackbarComponent } from "./components/success-snackbar/success-snackbar.component";
 import { AppService } from "./app.service";
+import { EventsModule } from './events.module';
 
 //  App components
 {{#each entities}}
-import { {{pascalCase name}}Component } from './components/entities/{{kebabCase name}}/{{kebabCase name}}.component';
-{{/each}}
-{{#each entities}}
-import { {{pascalCase name}}FormComponent } from './components/entities/{{kebabCase name}}-form/{{kebabCase name}}-form.component';
+import { {{pascalCase name}}TableComponent } from './components/entities/{{kebabCase name}}/{{kebabCase name}}-table/{{kebabCase name}}-table.component';
+import { {{pascalCase name}}FormComponent } from './components/entities/{{kebabCase name}}/{{kebabCase name}}-form/{{kebabCase name}}-form.component';
+import { {{pascalCase name}}RouteComponent } from './components/entities/{{kebabCase name}}/{{kebabCase name}}-route/{{kebabCase name}}-route.component';
 {{/each}}
 
 //  Material modules
@@ -39,6 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -48,13 +50,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ErrorSnackbarComponent,
     SuccessSnackbarComponent,
     {{#each entities}}
-      {{pascalCase name}}Component,
-    {{/each}}
-    {{#each entities}}
+      {{pascalCase name}}TableComponent,
       {{pascalCase name}}FormComponent,
+      {{pascalCase name}}RouteComponent,
     {{/each}}
   ],
   imports: [
+    EventsModule,
     FormsModule,
     HttpClientModule,
     BrowserModule,
@@ -66,7 +68,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatInputModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule,
+    MatCardModule
   ],
   providers: [
     provideAnimationsAsync(),

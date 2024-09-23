@@ -12,15 +12,14 @@ import { RouterModule, Routes } from "@angular/router";
 import { MainContentComponent } from "./components/main-content/main-content.component";
 
 {{#entities}}
-import { {{name}}Component } from "./components/entities/{{kebabCase name}}/{{kebabCase name}}.component";
-{{/entities}}
-{{#entities}}
-import { {{name}}FormComponent } from "./components/entities/{{kebabCase name}}-form/{{kebabCase name}}-form.component";
+import { {{name}}TableComponent } from "./components/entities/{{kebabCase name}}/{{kebabCase name}}-table/{{kebabCase name}}-table.component";
+import { {{name}}FormComponent } from "./components/entities/{{kebabCase name}}/{{kebabCase name}}-form/{{kebabCase name}}-form.component";
+import { {{name}}RouteComponent } from "./components/entities/{{kebabCase name}}/{{kebabCase name}}-route/{{kebabCase name}}-route.component";
 {{/entities}}
 
 const routes: Routes = [
   {
-    path: "main",
+    path: "",
     component: MainContentComponent
   },
   {
@@ -31,7 +30,7 @@ const routes: Routes = [
   {{#entities}}
     {
       path: "{{kebabCase name}}",
-      component: {{name}}Component
+      component: {{name}}RouteComponent
     },
     {
       path: "{{kebabCase name}}/:id",
@@ -44,7 +43,7 @@ const routes: Routes = [
   {{/entities}}
   {
     path: "**",
-    redirectTo: "/main"
+    redirectTo: "/"
   }
 ];
 

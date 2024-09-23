@@ -7,29 +7,58 @@
     "formatUsing": "typescript"
 }
 ---
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { SocketService } from '../../services/socket.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-main-drawer',
   templateUrl: './main-drawer.component.html',
   styleUrl: './main-drawer.component.scss'
 })
-export class MainDrawerComponent {
+export class MainDrawerComponent implements OnInit {
 
+  activeView: string = '';
+  tables: { table: string, counter: number }[] = [];
   constructor(
-    private router: Router
-  ) { }
-  
+    private router: Router,
+    private socketService: SocketService,
+    private httpService: HttpService,
+    private location: Location
+  ) {
+    this.httpService.getTables().then((data: string[]) => {
+      this.tables = data.map((table) => ({
+        table,
+        counter: 0,
+      }));
+    });
+    this.socketService.subscribeToAllChanges().subscribe((data: any) => {
+      if (data && data !== this.activeView) {
+          const newTables = [ ... this.tables ];
+          const table = newTables.find((table) => table.table === data);
+          if (table) {
+              table.counter++;
+              this.tables = newTables;
+          }
+      }
+    })
+  }
 
-  tables: string[] = [
-    {{#entities}}
-    "{{kebabCase name}}",
-    {{/entities}}
-  ];
+  ngOnInit(): void {
+    this.activeView = this.location.path().replace("/", "")
+  }
 
-  public onNavigate(table: string) {
-    this.router.navigate([table]);
+  public onNavigate(table: any) {
+    this.router.navigate([table.table]);
+    this.activeView = table.table;
+    const newTables = [ ... this.tables ];
+    const currentTable = newTables.find((table) => table.table === this.activeView);
+    if (currentTable) {
+        currentTable.counter = 0;
+        this.tables = newTables;
+    }
   }
 }
 

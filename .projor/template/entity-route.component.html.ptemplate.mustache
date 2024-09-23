@@ -1,0 +1,7 @@
+{
+    "forEach": "entities",
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-route/{{kebabCase name}}-route.component.html"
+}
+---
+<h2><button mat-raised-button (click)="onCreate()">Create {{pascalCase name}}</button> {{pascalCase name}}</h2>
+<app-{{kebabCase name}}-table (rowClicked)="onRowClicked($event)"></app-{{kebabCase name}}-table>

@@ -1,0 +1,28 @@
+{
+    "forEach": "entities",
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-route/{{kebabCase name}}-route.component.ts",
+    "formatUsing": "typescript"
+}
+---
+import { Component } from '@angular/core';
+import { Router } from "@angular/router";
+
+@Component({
+  selector: 'app-{{kebabCase name}}-route',
+  templateUrl: './{{kebabCase name}}-route.component.html',
+  styleUrl: './{{kebabCase name}}-route.component.scss'
+})
+export class {{pascalCase name}}RouteComponent {
+
+  constructor(
+      private router: Router
+  ) {}
+
+  public onCreate(): void {
+    this.router.navigate(["/create/{{kebabCase name}}"]);
+  }
+
+  public onRowClicked(row: any): void {
+    this.router.navigate(["/author", row.id]);
+  }
+}

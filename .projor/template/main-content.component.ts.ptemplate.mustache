@@ -8,6 +8,7 @@
 }
 ---
 import { Component } from '@angular/core';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-main-content',
@@ -15,7 +16,14 @@ import { Component } from '@angular/core';
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
+	selected: string = '';
 
+	constructor(
+		private appService: AppService
+	) {}
+
+	public onExampleTableRowClick(event: any, table: string): void {
+		console.log(event, table);
+		this.appService.openConfirmSnackBar(`Clicked on a ${table}!`)
+	}
 }
-
-
