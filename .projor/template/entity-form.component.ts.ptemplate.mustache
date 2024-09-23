@@ -4,11 +4,11 @@
     "formatUsing": "typescript"
 }
 ---
-
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from "../../../../services/http.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AppService } from "../../../../app.service";
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-{{kebabCase name}}-form',
@@ -18,10 +18,15 @@ import { AppService } from "../../../../app.service";
 export class {{pascalCase name}}FormComponent implements OnInit {
   editMode: boolean = true
   entityId: string | null = null
-  entity: any = {
-    {{#each attributes}}{{name}}: null,{{/each}}
-    {{#each associations}}{{name}}Id: null,{{/each}}
-  }
+
+  {{kebabCase name}}Form = new FormGroup({
+    {{#each attributes}}
+    {{camelCase name}}: new FormControl(''),
+    {{/each}}
+    {{#each associations}}
+    {{camelCase name}}Id: new FormControl(''),
+    {{/each}}
+  });
 
   constructor(
       private httpService: HttpService,
@@ -39,37 +44,33 @@ export class {{pascalCase name}}FormComponent implements OnInit {
     this.httpService.getRequest("{{kebabCase name}}", this.entityId)
       .then((data: any) => {
         if (data) {
-          this.entity = data;
+          this.{{camelCase name}}Form.patchValue(data);
           this.editMode = true;
         }
       })
-      .catch((error: any) => {
+      .catch(_ => {
         this.appService.openErrorSnackBar('Could not load entities')
       })
   }
 
-  public onChange(property: string, event: any): void {
-    this.entity[property] = event.target.value
-  }
-
   public onSave(): void {
-    this.httpService.postRequest("{{kebabCase name}}", this.entity, this.entityId)
-      .then((data: any) => {
+    this.httpService.postRequest("{{kebabCase name}}", this.{{kebabCase name}}Form.value, this.entityId)
+      .then(_ => {
         this.appService.openConfirmSnackBar('Entity saved')
         this.router.navigate(["/{{kebabCase name}}"])
       })
-      .catch((error: any) => {
+      .catch(_ => {
         this.appService.openErrorSnackBar('Could not save entity')
       })
   }
 
   public onDelete(): void {
     this.httpService.deleteRequest("{{kebabCase name}}", this.entityId)
-      .then((data: any) => {
+      .then(_ => {
         this.appService.openConfirmSnackBar('Entity deleted')
         this.router.navigate(["/{{kebabCase name}}"])
       })
-      .catch((error: any) => {
+      .catch(_ => {
         this.appService.openErrorSnackBar('Could not delete entity')
       })
   }

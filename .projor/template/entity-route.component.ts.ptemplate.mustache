@@ -23,6 +23,6 @@ export class {{pascalCase name}}RouteComponent {
   }
 
   public onRowClicked(row: any): void {
-    this.router.navigate(["/author", row.id]);
+    this.router.navigate(["/{{kebabCase name}}", row.id]);
   }
 }

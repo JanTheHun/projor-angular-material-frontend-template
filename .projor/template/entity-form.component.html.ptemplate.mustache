@@ -9,11 +9,12 @@
         <button mat-raised-button (click)="onDelete()">Delete</button>
     </ng-container>
 </h2>
+<form [formGroup]="{{camelCase name}}Form">
 {{#each attributes}}
 <div class="inputField">
     <mat-form-field appearance="outline">
         <mat-label>{{pascalCase name}}</mat-label>
-        <input matInput placeholder="{{camelCase name}}" [value]="entity?.{{camelCase name}}" (change)="onChange('{{camelCase name}}', $event)">
+        <input matInput placeholder="{{camelCase name}}" formControlName="{{camelCase name}}" (change)="onChange('{{camelCase name}}', $event)">
         <mat-hint>{{description}}</mat-hint>
     </mat-form-field>
 </div>
@@ -22,8 +23,9 @@
 <div class="inputField">
     <mat-form-field appearance="outline">
         <mat-label>{{pascalCase name}}</mat-label>
-        <input #{{camelCase name}} matInput placeholder="{{camelCase name}}" [value]="entity?.{{camelCase name}}Id" (change)="onChange('{{camelCase name}}Id', $event)">
+        <input #{{camelCase name}} matInput placeholder="{{camelCase name}}" formControlName="{{camelCase name}}Id" (change)="onChange('{{camelCase name}}Id', $event)">
         <mat-hint>{{description}}</mat-hint>
     </mat-form-field>
 </div>
 {{/each}}
+</form>
