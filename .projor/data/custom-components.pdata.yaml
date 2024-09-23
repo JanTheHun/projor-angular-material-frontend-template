@@ -1,0 +1,15 @@
+id: custom-components
+name: Custom Components
+description: Custom components
+schema: CustomComponent
+objects:
+  - name: Card
+    description: A card
+    actions:
+      - name: Add
+        description: Add a card
+      - name: Edit
+        description: Edit a card
+      - name: Delete
+        description: Delete a card
+  

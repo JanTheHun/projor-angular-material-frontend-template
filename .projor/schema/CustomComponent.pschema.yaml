@@ -1,0 +1,12 @@
+id: CustomComponent
+name: Custom Component
+description: A custom component
+fields:
+  - name: type
+    description: The type of the custom component
+    type: string
+    required: true
+  - name: actions
+    description: The actions of the custom component
+    type: string
+    multiple: true
