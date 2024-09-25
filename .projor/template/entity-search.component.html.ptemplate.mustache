@@ -1,0 +1,25 @@
+{
+    "forEach": "entities",
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-search/{{kebabCase name}}-search.component.html"
+}
+---
+<form [formGroup]="{{camelCase name}}Form">
+{{#each attributes}}
+<div class="inputField">
+    <mat-form-field appearance="outline">
+        <mat-label>{{pascalCase name}}</mat-label>
+        <input matInput placeholder="{{camelCase name}}" formControlName="{{camelCase name}}">
+        <mat-hint>{{description}}</mat-hint>
+    </mat-form-field>
+</div>
+{{/each}}
+{{#each associations}}
+<div class="inputField">
+    <mat-form-field appearance="outline">
+        <mat-label>{{pascalCase name}}</mat-label>
+        <input #{{camelCase name}} matInput placeholder="{{camelCase name}}" formControlName="{{camelCase name}}Id">
+        <mat-hint>{{description}}</mat-hint>
+    </mat-form-field>
+</div>
+{{/each}}
+</form>

@@ -1,0 +1,41 @@
+{
+    "forEach": "entities",
+    "filename": "src/app/components/entities/{{kebabCase name}}/{{kebabCase name}}-search/{{kebabCase name}}-search.component.ts",
+    "formatUsing": "typescript"
+}
+---
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from "../../../../services/http.service";
+import { Router, ActivatedRoute } from "@angular/router";
+import { AppService } from "../../../../app.service";
+import { FormGroup, FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-{{kebabCase name}}-search',
+  templateUrl: './{{kebabCase name}}-search.component.html',
+  styleUrl: './{{kebabCase name}}-search.component.scss'
+})
+export class {{pascalCase name}}SearchComponent implements OnInit {
+  editMode: boolean = true
+  entityId: string | null = null
+
+  {{kebabCase name}}Form = new FormGroup({
+    {{#each attributes}}
+    {{camelCase name}}: new FormControl(''),
+    {{/each}}
+    {{#each associations}}
+    {{camelCase name}}Id: new FormControl(''),
+    {{/each}}
+  });
+
+  constructor(
+      private httpService: HttpService,
+      private router: Router,
+      private route: ActivatedRoute,
+      private appService: AppService
+  ) {}
+
+  ngOnInit() {
+    
+  }
+}
